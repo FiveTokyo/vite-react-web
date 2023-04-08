@@ -4,13 +4,14 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
-      "@src": ["./src"],
+      "@src/*": ["./src/*"],
       "@assets/*": ["./src/assets/*"],
       "@common/*": ["./src/common/*"],
       "@components/*": ["./src/components/*"],
       "@pages/*": ["./src/pages/*"],
       "@utils/*": ["./src/utils/*"],
-      "@api/*": ["./src/api/*"]
+      "@api/*": ["./src/api/*"],
+      "@styles/*": ["./src/styles/*"]
     }
   }
 }

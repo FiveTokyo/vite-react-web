@@ -68,6 +68,7 @@ export default defineConfig((({ command, mode, ssrBuild }) => {
           "@common": resolve('src/common'),
           "@components": resolve('src/components'),
           "@pages": resolve('src/pages'),
+          "@styles": resolve('src/styles'),
           "@api": resolve('src/api'),
           // store: resolve('src/store'),
           "@utils": resolve('src/utils')
@@ -77,10 +78,10 @@ export default defineConfig((({ command, mode, ssrBuild }) => {
         preprocessorOptions: {
           less: {
             javascriptEnabled: true,
-            additionalData: `@import "@/styles/var.less";`,
-            modifyVars: {
-              "@primary-color": "#4377FE", //设置antd主题色
-            },
+            // additionalData: `@import "@/styles/var.less";`,
+            // modifyVars: {
+            //   "@primary-color": "#4377FE", //设置antd主题色
+            // },
           },
         },
       },
