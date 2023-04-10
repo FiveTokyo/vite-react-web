@@ -3,4 +3,4 @@
  * @date $datetime
  * @since ${pkg.version}
  */
-@import 'styles/base';
+@import '@src/styles/base/base.less';

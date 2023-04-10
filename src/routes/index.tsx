@@ -1,12 +1,30 @@
+import { lazy } from "react";
 import { Navigate, RouteObject } from "react-router-dom";
+import { Layout } from "../components";
 import LazyImport from "../components/LazyImport";
-import Login from "../pages/login";
+import { Home, Login } from "../pages";
 
-const routes: RouteObject[] = [
-  { path: "/", element: <Navigate to="/login" replace={true} /> },
+const routes = [
   {
     path: "/login",
-    element: <Login />,
+    element: LazyImport(Login),
+    layout: false,
+  },
+  {
+    path: "/",
+    layout: false,
+    element: <Navigate to="/back/home" replace={true} />,
+  },
+  {
+    path: "/back", //后台
+    element: <Layout />,
+    children: [
+      {
+        path: "/back/home",
+        element: LazyImport(Home),
+      },
+    ],
   },
 ];
+
 export default routes;

@@ -7,7 +7,7 @@ function App() {
   const [count, setCount] = useState(0)
   const element = useRoutes(routes);
   const location = useLocation();
-
+  console.log('element:', element)
   const navigationType = useNavigationType();
 
   useLayoutEffect(() => {

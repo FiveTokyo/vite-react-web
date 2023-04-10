@@ -1,12 +1,10 @@
 import { Spin } from "antd";
-import React, { LazyExoticComponent } from "react";
+import React, { FC, LazyExoticComponent, ReactElement } from "react";
 
-const LazyImport = (props: {
-  lazyChildren: LazyExoticComponent<() => JSX.Element>;
-}) => {
+const LazyImport = (LazyChildren: FC) => {
   return (
     <React.Suspense fallback={<Spin spinning={true} />}>
-      <props.lazyChildren />
+      <LazyChildren />
     </React.Suspense>
   );
 };
