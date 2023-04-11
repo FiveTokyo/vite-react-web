@@ -1,86 +1,66 @@
+//添加前缀,避免多个项目缓存命名冲突,还有缓存数据加密\安全数据问题 token等
 import CryptoJS from 'crypto-js';
 
 const myPackage = require('../../package.json');
 
-const prefix = `${myPackage.name}_${myPackage.version}_${process.env.NODE_ENV}`
+//环境+项目名+版本号+缓存名
+const prev = process.env.NODE_ENV + '_' + myPackage.name + '_' + myPackage.version + '_';
 
-
-/** 设置localStorage
- * @param  {string} tokenName //localStorage名称
- * @param  {string} token //localStorage数据
- * @returns string  设置的localStorage
- */
-export function setLocal(tokenName: string, token: string) {
-  const data = encryptByAES(token)
-  localStorage.setItem(`${prefix}_${tokenName}`, data);
+export function setLocal(name: string, value: string | undefined) {
+  return localStorage.setItem(prev + name, encryptByAES(value))
 }
 
-/** 获取localStorage
- * @param  {string} tokenName //localStorage名称
- * @returns string  localStorage数据
- */
-export function getLocal(tokenName: string) {
-  const result = localStorage.getItem(`${prefix}_${tokenName}`)
-  if (!result) return null;
+export function getLocal(name: string) {
+  const result = localStorage.getItem(prev + name);
+  if (!result) return null
   return decryptByAES(result)
 }
 
-/** 移除localStorage
- * @param  {string} tokenName //localStorage名称
- */
-export function rmLocal(tokenName: string) {
-  localStorage.removeItem(`${prefix}_${tokenName}`);
+export function rmLocal(name: string) {
+  return localStorage.removeItem(prev + name);
 }
 
-
-/** 设置Session
- * @param  {string} tokenName //Session名称
- * @param  {string} token //Session数据
- * @returns string  设置的Session
- */
-export function setSession(tokenName: string, token: string) {
-  const data = encryptByAES(token)
-  sessionStorage.setItem(`${prefix}_${tokenName}`, data);
+export function setSession(name: string, value: string | undefined) {
+  return sessionStorage.setItem(prev + name, encryptByAES(value))
 }
 
-/** 获取Session
- * @param  {string} tokenName //Session名称
- * @returns string  Session数据
- */
-export function getSession(tokenName: string) {
-  const result = sessionStorage.getItem(`${prefix}_${tokenName}`)
-  if (!result) return null;
+export function getSession(name: string) {
+  const result = sessionStorage.getItem(prev + name);
+  if (!result) return null
   return decryptByAES(result)
 }
 
-/** 移除Session
- * @param  {string} tokenName //Session名称
- */
-export function rmSession(tokenName: string) {
-  sessionStorage.removeItem(`${prefix}_${tokenName}`);
+export function rmSession(name: string) {
+  return sessionStorage.removeItem(prev + name);
 }
 
+//自定义密钥进制,16进制,32个编码
+const key = CryptoJS.enc.Hex.parse("97d46447e8d0b3bc4fe4cff2ee3a8121");
+const iv = CryptoJS.enc.Hex.parse("3f6d4d7247299bef5a1335a724743485");
 
-
-const AES_KEY =
-  'MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBAKe9As2DcXIEal+qLTq4o9/KqDaznL06zDgYUP2R3r8wAUDH+CvGk33FaLmKCt8hlf4inN7/yPhNn/9RWALSyXpFR1dk7p06uQoBL3PPerlemHL01HP8oQNwh5TZ/2khL+yyU5xTIPwMi51rKyTyBEmvqiGbBNbW9437c2kxW2tfAgMBAAECgYAaCtdnjvPLDvJw/dvd1RLkSPOK4qIAIyPXxba1V7NsnYhkRWe7bC40BbU3sT303KML/NW8LZxHKM4hdsCiV5WeHKMk9fmZKKmFqPtUacOEUhUuLR2Gjl6MuW6Oj8JEVzxfpa4cjPpbx9wg/kSfjpYWntj9B5O+jmJ3WIkwcYmVsQJBAN9BJIOfGMKrew18zN9PLGQNttFO9GzG4EE9MnnkipYM2kiaprJ7sIWjJ9RQaF8cJD055QfaDilpW/lXaaj57JcCQQDAV1LhWMxLGcC0hagX2Ua+K9N0URlQxiiE4HZLQHsGM0cYlqk3Gl6EXoMqYBzUYZy0pLkNBXGL8QeJ4gFtNSh5AkEAhEhlClhKo45X6zX3bpnLA73chUjzK0Drv7wzHGZ+d0pGTJ7WBwujHIwAHZ1HOpPCJUUYn/5kRcVX6fYRdT4hIQJBAI8Koj2qz0vu3Ayk9cy+rsjRSRHRGlWi +RFQ6UivrI6A5hfYPAIZ3z7sFvoVvnsIGQWTF3gimz4qw6N8a/kutmkCQQC5oGHYH3fJ3ImEX3ZIy6xeYPLPxxI1tC6N13qzVo3t8tVI3nSgTWVGmu11cEwJZ4MPaqy45+a4FSkugf9Toxqi';
 //加密
 /**
- * @param  {string} text 需要加密的数据
+ * @param  {string} data 需要加密的数据
  * @returns string 加密后返回的数据
  */
-export function encryptByAES(text: string) {
-  return CryptoJS.AES.encrypt(text, AES_KEY).toString();
-}
-//解密
-/**
- * @param  {string} cipherText //需要被解密的数据
- * @returns string  揭秘后的数据
- */
-export function decryptByAES(cipherText: any) {
-  return CryptoJS.AES.decrypt(cipherText, AES_KEY).toString(CryptoJS.enc.Utf8);
+export function encryptByAES(data = '') {
+  return CryptoJS.AES.encrypt(data, key, {
+    iv: iv,
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7
+  }).toString();
 }
 
-export function encryptByMD5(text: string) {
-  return CryptoJS.MD5(text).toString();
+//解密
+/**
+ * @param  {string} encrypted //需要被解密的数据
+ * @returns string  揭秘后的数据
+ */
+export function decryptByAES(encrypted = '') {
+  const decrypt = CryptoJS.AES.decrypt(encrypted, key, {
+    iv: iv, mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7
+  });
+  return decrypt.toString(CryptoJS.enc.Utf8);
 }
+
