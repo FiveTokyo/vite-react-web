@@ -8,11 +8,9 @@ const routes = [
   {
     path: "/login",
     element: LazyImport(Login),
-    layout: false,
   },
   {
     path: "/",
-    layout: false,
     element: <Navigate to="/back/home" replace={true} />,
   },
   {
@@ -26,5 +24,6 @@ const routes = [
     ],
   },
 ];
+
 
 export default routes;

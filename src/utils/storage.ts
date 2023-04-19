@@ -1,7 +1,14 @@
+/*
+ * @Author: 伍东京 15211420607@163.com
+ * @Date: 2023-04-13 09:32:02
+ * @LastEditors: 伍东京 15211420607@163.com
+ * @LastEditTime: 2023-04-18 17:33:32
+ * @FilePath: /vite-react-web/src/utils/storage.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 //添加前缀,避免多个项目缓存命名冲突,还有缓存数据加密\安全数据问题 token等
 import CryptoJS from 'crypto-js';
-
-const myPackage = require('../../package.json');
+import myPackage from '../../package.json';
 
 //环境+项目名+版本号+缓存名
 const prev = process.env.NODE_ENV + '_' + myPackage.name + '_' + myPackage.version + '_';

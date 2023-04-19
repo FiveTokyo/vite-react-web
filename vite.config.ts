@@ -10,7 +10,6 @@ const resolve = pathUrl => {
 
 export default defineConfig((({ command, mode, ssrBuild }) => {
   const env = loadEnv(mode, process.cwd(), '');
-  console.log('command:', command)
   const result = {
 
     // plugins
@@ -87,7 +86,7 @@ export default defineConfig((({ command, mode, ssrBuild }) => {
       },
       server: {
         host: "0.0.0.0", // 服务器主机名，如果允许外部访问，可设置为"0.0.0.0"
-        // port: viteEnv.VITE_PORT,
+        port: 8000,
         // open: viteEnv.VITE_OPEN,
         cors: true,
         // 代理跨域地址配置（官网几种写法）
