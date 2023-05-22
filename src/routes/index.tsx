@@ -3,6 +3,7 @@ import { Navigate, RouteObject } from "react-router-dom";
 import { Layout } from "../components";
 import LazyImport from "../components/LazyImport";
 import { Home, Login } from "../pages";
+import UploadFile from "../pages/uploadFile";
 
 const routes = [
   {
@@ -14,12 +15,16 @@ const routes = [
     element: <Navigate to="/back/home" replace={true} />,
   },
   {
-    path: "/back", //后台
+    path: "back", //后台
     element: <Layout />,
     children: [
       {
-        path: "/back/home",
+        path: "home",
         element: LazyImport(Home),
+      },
+      {
+        path: "upload",
+        element: <UploadFile/>,
       },
     ],
   },

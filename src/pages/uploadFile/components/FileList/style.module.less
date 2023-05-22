@@ -1,0 +1,45 @@
+/**
+ * @author tokyo
+ * @date 2023-05-20 09:32
+ * @since 0.0.1
+ */
+@import "@src/styles/base";
+.fileList {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  border: 1px solid #c1c1c1;
+  margin-top: 10px;
+}
+
+.name {
+  font-weight: 500;
+}
+
+.fileInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-left: 10px;
+  flex: 1;
+  padding: 5px 10px;
+  overflow: hidden;
+}
+
+.url {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  .href {
+    flex: 1;
+    margin-right: 30px;
+    .ellipsis()
+  }
+  
+  .icon {
+    min-width: 20px;
+  }
+}
+
+
